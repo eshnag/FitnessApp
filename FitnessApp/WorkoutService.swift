@@ -23,17 +23,22 @@ class WorkoutService {
             .insert(newWorkout)
             .execute()
     }
-    func fetchWorkouts() async throws -> [Workout] {
+    func fetchWorkouts(lastDays: Int? = nil) async throws -> [Workout] {
         let user = try await SupabaseService.shared.client.auth.session.user
         
-        let response: [Workout] = try await SupabaseService.shared.client
+        var query = SupabaseService.shared.client
             .from("workouts")
             .select()
             .eq("user_id", value: user.id)
             .order("created_at", ascending: false)
-            .execute()
-            .value
-        
+
+        if let days = lastDays, days > 0 {
+            let fromDate = Calendar.current.date(byAdding: .day, value: -days, to: Date()) ?? Date()
+            let fromIso = ISO8601DateFormatter().string(from: fromDate)
+            query = query.gte("created_at", value: fromIso)
+        }
+
+        let response: [Workout] = try await query.execute().value
         return response
     }
     func deleteWorkout(id: UUID) async throws {

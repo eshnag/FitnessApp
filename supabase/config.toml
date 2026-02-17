@@ -1,0 +1,4 @@
+# Skip gateway JWT verification so the Authorization header is forwarded to the function.
+# The progress-summary function validates the JWT itself via auth.getUser(token).
+[functions.progress-summary]
+verify_jwt = false

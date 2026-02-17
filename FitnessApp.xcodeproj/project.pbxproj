@@ -14,6 +14,18 @@
 		BED492E62F4420FF000E29D3 /* FitnessAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED492E52F4420FF000E29D3 /* FitnessAppTests.swift */; };
 		BED492F02F4420FF000E29D3 /* FitnessAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED492EF2F4420FF000E29D3 /* FitnessAppUITests.swift */; };
 		BED492F22F4420FF000E29D3 /* FitnessAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED492F12F4420FF000E29D3 /* FitnessAppUITestsLaunchTests.swift */; };
+		BED493002F4421C8000E29D3 /* SupabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED492FF2F4421C8000E29D3 /* SupabaseService.swift */; };
+		BED493032F44223B000E29D3 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = BED493022F44223B000E29D3 /* Supabase */; };
+		BED493052F442256000E29D3 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED493042F442256000E29D3 /* Workout.swift */; };
+		BED493072F442282000E29D3 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED493062F442282000E29D3 /* AuthViewModel.swift */; };
+		BED493092F442296000E29D3 /* WorkoutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED493082F442296000E29D3 /* WorkoutService.swift */; };
+		BED4930B2F44237B000E29D3 /* MainAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED4930A2F44237B000E29D3 /* MainAppView.swift */; };
+		BED4930D2F44238F000E29D3 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED4930C2F44238F000E29D3 /* AuthView.swift */; };
+		BED4930F2F442616000E29D3 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED4930E2F442616000E29D3 /* DashboardView.swift */; };
+		BED493112F442640000E29D3 /* LogWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED493102F442640000E29D3 /* LogWorkoutView.swift */; };
+		BED493132F4426B5000E29D3 /* WorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED493122F4426B5000E29D3 /* WorkoutViewModel.swift */; };
+		BED493152F4426C0000E29D3 /* ProgressSummaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED493142F4426C0000E29D3 /* ProgressSummaryViewModel.swift */; };
+		BED493172F4426C0000E29D4 /* ProgressSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED493162F4426C0000E29D4 /* ProgressSummaryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +56,17 @@
 		BED492EB2F4420FF000E29D3 /* FitnessAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FitnessAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BED492EF2F4420FF000E29D3 /* FitnessAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessAppUITests.swift; sourceTree = "<group>"; };
 		BED492F12F4420FF000E29D3 /* FitnessAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		BED492FF2F4421C8000E29D3 /* SupabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseService.swift; sourceTree = "<group>"; };
+		BED493042F442256000E29D3 /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
+		BED493062F442282000E29D3 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		BED493082F442296000E29D3 /* WorkoutService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutService.swift; sourceTree = "<group>"; };
+		BED4930A2F44237B000E29D3 /* MainAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppView.swift; sourceTree = "<group>"; };
+		BED4930C2F44238F000E29D3 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		BED4930E2F442616000E29D3 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		BED493102F442640000E29D3 /* LogWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogWorkoutView.swift; sourceTree = "<group>"; };
+		BED493122F4426B5000E29D3 /* WorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutViewModel.swift; sourceTree = "<group>"; };
+		BED493142F4426C0000E29D3 /* ProgressSummaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSummaryViewModel.swift; sourceTree = "<group>"; };
+		BED493162F4426C0000E29D4 /* ProgressSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSummaryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BED493032F44223B000E29D3 /* Supabase in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +102,7 @@
 				BED492E42F4420FF000E29D3 /* FitnessAppTests */,
 				BED492EE2F4420FF000E29D3 /* FitnessAppUITests */,
 				BED492D22F4420FE000E29D3 /* Products */,
+				BED493012F44223B000E29D3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -96,8 +121,19 @@
 			children = (
 				BED492D42F4420FE000E29D3 /* FitnessAppApp.swift */,
 				BED492D62F4420FE000E29D3 /* ContentView.swift */,
+				BED4930A2F44237B000E29D3 /* MainAppView.swift */,
+				BED493102F442640000E29D3 /* LogWorkoutView.swift */,
+				BED4930E2F442616000E29D3 /* DashboardView.swift */,
+				BED4930C2F44238F000E29D3 /* AuthView.swift */,
+				BED492FF2F4421C8000E29D3 /* SupabaseService.swift */,
 				BED492D82F4420FF000E29D3 /* Assets.xcassets */,
 				BED492DA2F4420FF000E29D3 /* Preview Content */,
+				BED493042F442256000E29D3 /* Workout.swift */,
+				BED493062F442282000E29D3 /* AuthViewModel.swift */,
+				BED493082F442296000E29D3 /* WorkoutService.swift */,
+				BED493122F4426B5000E29D3 /* WorkoutViewModel.swift */,
+				BED493142F4426C0000E29D3 /* ProgressSummaryViewModel.swift */,
+				BED493162F4426C0000E29D4 /* ProgressSummaryView.swift */,
 			);
 			path = FitnessApp;
 			sourceTree = "<group>";
@@ -127,6 +163,13 @@
 			path = FitnessAppUITests;
 			sourceTree = "<group>";
 		};
+		BED493012F44223B000E29D3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -143,6 +186,9 @@
 			dependencies = (
 			);
 			name = FitnessApp;
+			packageProductDependencies = (
+				BED493022F44223B000E29D3 /* Supabase */,
+			);
 			productName = FitnessApp;
 			productReference = BED492D12F4420FE000E29D3 /* FitnessApp.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +261,9 @@
 				Base,
 			);
 			mainGroup = BED492C82F4420FE000E29D3;
+			packageReferences = (
+				BED492FE2F442188000E29D3 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+			);
 			productRefGroup = BED492D22F4420FE000E29D3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -257,8 +306,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BED493072F442282000E29D3 /* AuthViewModel.swift in Sources */,
+				BED493112F442640000E29D3 /* LogWorkoutView.swift in Sources */,
 				BED492D72F4420FE000E29D3 /* ContentView.swift in Sources */,
+				BED4930B2F44237B000E29D3 /* MainAppView.swift in Sources */,
+				BED493002F4421C8000E29D3 /* SupabaseService.swift in Sources */,
+				BED4930F2F442616000E29D3 /* DashboardView.swift in Sources */,
+				BED493132F4426B5000E29D3 /* WorkoutViewModel.swift in Sources */,
+				BED493092F442296000E29D3 /* WorkoutService.swift in Sources */,
 				BED492D52F4420FE000E29D3 /* FitnessAppApp.swift in Sources */,
+				BED4930D2F44238F000E29D3 /* AuthView.swift in Sources */,
+				BED493052F442256000E29D3 /* Workout.swift in Sources */,
+				BED493152F4426C0000E29D3 /* ProgressSummaryViewModel.swift in Sources */,
+				BED493172F4426C0000E29D4 /* ProgressSummaryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -582,6 +642,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		BED492FE2F442188000E29D3 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BED493022F44223B000E29D3 /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BED492FE2F442188000E29D3 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BED492C92F4420FE000E29D3 /* Project object */;
 }

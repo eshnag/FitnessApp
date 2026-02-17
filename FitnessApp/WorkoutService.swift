@@ -30,7 +30,6 @@ class WorkoutService {
             .from("workouts")
             .select()
             .eq("user_id", value: user.id)
-            .order("created_at", ascending: false)
 
         if let days = lastDays, days > 0 {
             let fromDate = Calendar.current.date(byAdding: .day, value: -days, to: Date()) ?? Date()
@@ -38,7 +37,10 @@ class WorkoutService {
             query = query.gte("created_at", value: fromIso)
         }
 
-        let response: [Workout] = try await query.execute().value
+        let response: [Workout] = try await query
+            .order("created_at", ascending: false)
+            .execute()
+            .value
         return response
     }
     func deleteWorkout(id: UUID) async throws {

@@ -1,4 +1,5 @@
 // Progress summary Edge Function: fetches last 7 days of workouts, calls OpenAI as personal trainer, returns summary.
+/// <reference path="./deno.d.ts" />
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import OpenAI from "https://deno.land/x/openai@v4.24.0/mod.ts";

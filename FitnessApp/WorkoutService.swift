@@ -49,11 +49,13 @@ class WorkoutService {
         struct ProgressSummaryResponse: Decodable {
             let summary: String
         }
+        let session = try await SupabaseService.shared.client.auth.session
         let response: ProgressSummaryResponse = try await SupabaseService.shared.client
             .functions
-            .invoke("progress-summary")
-            .execute()
-            .value
+            .invoke(
+                "progress-summary",
+                options: FunctionInvokeOptions(headers: ["Authorization": "Bearer \(session.accessToken)"])
+            )
         return response.summary
     }
 }

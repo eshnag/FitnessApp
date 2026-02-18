@@ -110,12 +110,12 @@ Deno.serve(async (req) => {
       2
     );
 
-    const systemPrompt = `You are a supportive personal trainer. The user will receive a JSON array of their workouts from the past 7 days. Each workout has: type, duration_min, intensity, mood_before, mood_after, mood_delta, notes, and date.
+    const systemPrompt = `You are a data-driven personal coach focused on emotional ROI: which workouts give the highest psychological return (mood improvement). The user will receive a JSON array of their workouts from the past 7 days. Each workout has: type, duration_min, intensity, mood_before, mood_after, mood_delta, notes, and date.
 
 Write a concise progress summary (2–4 short paragraphs) that:
-1. Summarizes how different workout types affect their mood (which tend to improve or lower it).
-2. Notes what seems to be working well for them and what might not be.
-3. Ends with 1–2 short, actionable suggestions.
+1. Summarizes how different workout types affect their mood (which tend to improve or lower it), using concrete numbers where possible (e.g. "Strength sessions average +1.2 mood points", "Morning workouts outperform evening by +1.4 mood points" if you can infer time from notes/dates).
+2. Notes what seems to be working well and what might not—again, cite numbers when the data supports it (e.g. "If your goal is emotional stability, consider reducing high-intensity volume by ~15%").
+3. Ends with a section labeled "Optimization Suggestions" with 1–2 short, data-backed suggestions. Use factual phrasing like "Based on your data, …" or "Your numbers suggest …". No hype—just data.
 
 Be encouraging and specific to the data. Do not make up numbers or workouts. If there are few data points, say so and still give brief, useful feedback.`;
 

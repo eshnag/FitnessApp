@@ -11,6 +11,8 @@ import Charts
 struct ProgressSummaryView: View {
 
     @StateObject private var viewModel = ProgressSummaryViewModel()
+    @State private var showExperimentSheet = false
+    @State private var experimentDefinition = ExperimentDefinition(hypothesis: .timeOfDay, typeA: "Strength", typeB: "Cardio")
 
     var body: some View {
         NavigationStack {
@@ -28,7 +30,7 @@ struct ProgressSummaryView: View {
                     Spacer()
                 } else if viewModel.workouts.isEmpty && viewModel.summary == nil {
                     Spacer()
-                    Text("Tap below to get a personal trainer-style summary of your recent workouts and mood.")
+                    Text("See what the data says. Get optimization suggestions based on your workouts and mood.")
                         .font(.subheadline)
                         .foregroundColor(AppTheme.oliveDark.opacity(0.7))
                         .multilineTextAlignment(.center)
@@ -43,12 +45,18 @@ struct ProgressSummaryView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.horizontal)
 
-                            if !viewModel.workouts.isEmpty {
+                            if !viewModel.workouts7Days.isEmpty {
                                 statsRow
-                                MoodTrendChart(workouts: viewModel.workouts)
-                                IntensityByTypeChart(workouts: viewModel.workouts)
-                                DurationChart(workouts: viewModel.workouts)
+                                MoodTrendChart(workouts: viewModel.workouts7Days)
+                                IntensityByTypeChart(workouts: viewModel.workouts7Days)
+                                DurationChart(workouts: viewModel.workouts7Days)
                             }
+
+                            if !viewModel.workouts.isEmpty {
+                                thirtyDaySection
+                            }
+
+                            experimentSection
 
                             if let summary = viewModel.summary {
                                 coachSection(summary: summary)
@@ -59,7 +67,7 @@ struct ProgressSummaryView: View {
                 }
 
                 if !viewModel.isLoading {
-                    Button("Generate progress summary") {
+                    Button("Get optimization suggestions") {
                         Task {
                             await viewModel.generateSummary()
                         }
@@ -70,11 +78,29 @@ struct ProgressSummaryView: View {
                     .padding(.bottom, 24)
                 }
             }
+            .sheet(isPresented: $showExperimentSheet) {
+                ExperimentSheet(
+                    definition: $experimentDefinition,
+                    result: viewModel.experimentResult,
+                    error: viewModel.experimentError,
+                    isRunning: viewModel.isRunningExperiment,
+                    onRun: {
+                        Task {
+                            await viewModel.runExperiment(definition: experimentDefinition)
+                        }
+                    }
+                )
+            }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(AppTheme.beige)
             .navigationTitle("Progress summary")
             .toolbarBackground(AppTheme.beige, for: .navigationBar)
             .toolbarColorScheme(.light, for: .navigationBar)
+            .task {
+                if viewModel.workouts.isEmpty && !viewModel.isLoading {
+                    await viewModel.loadProgressData()
+                }
+            }
         }
     }
 
@@ -88,9 +114,46 @@ struct ProgressSummaryView: View {
         .padding(.horizontal)
     }
 
+    private var thirtyDaySection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Last 30 days — emotional ROI")
+                .font(.subheadline)
+                .foregroundColor(AppTheme.oliveDark.opacity(0.7))
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal)
+
+            HStack(spacing: 12) {
+                StatCard(title: "Mood Δ avg", value: String(format: "%.1f", viewModel.avgMoodDelta30Days))
+                StatCard(title: "Stability", value: "\(viewModel.emotionalStabilityScore)")
+            }
+            .padding(.horizontal)
+
+            MoodDeltaByTypeChart(data: viewModel.avgMoodDeltaByType)
+            MoodDeltaByIntensityBandChart(data: viewModel.avgMoodDeltaByIntensityBand)
+        }
+    }
+
+    private var experimentSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Run an experiment")
+                .font(.subheadline)
+                .foregroundColor(AppTheme.oliveDark.opacity(0.7))
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal)
+            Button {
+                showExperimentSheet = true
+            } label: {
+                Label("Test a hypothesis (e.g. morning vs evening)", systemImage: "flask")
+            }
+            .buttonStyle(.bordered)
+            .tint(AppTheme.oliveGreen)
+            .padding(.horizontal)
+        }
+    }
+
     private func coachSection(summary: String) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Coach's take")
+            Text("Optimization Suggestions")
                 .font(.headline)
                 .foregroundColor(AppTheme.oliveGreen)
             Text(summary)
@@ -133,19 +196,20 @@ private struct MoodTrendChart: View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Mood trend")
                 .font(.headline)
+                .foregroundColor(AppTheme.oliveGreen)
             Chart {
                 ForEach(Array(workouts.enumerated()), id: \.offset) { i, w in
                     LineMark(
                         x: .value("Workout", i + 1),
                         y: .value("Before", w.mood_before)
                     )
-                    .foregroundStyle(.orange)
+                    .foregroundStyle(AppTheme.oliveDark)
                     .interpolationMethod(.catmullRom)
                     LineMark(
                         x: .value("Workout", i + 1),
                         y: .value("After", w.mood_after)
                     )
-                    .foregroundStyle(.green)
+                    .foregroundStyle(AppTheme.oliveGreen)
                     .interpolationMethod(.catmullRom)
                 }
             }
@@ -153,16 +217,17 @@ private struct MoodTrendChart: View {
             .frame(height: 160)
             HStack(spacing: 16) {
                 Label("Before", systemImage: "circle.fill")
-                    .foregroundStyle(.orange)
+                    .foregroundStyle(AppTheme.oliveDark)
                     .font(.caption)
                 Label("After", systemImage: "circle.fill")
-                    .foregroundStyle(.green)
+                    .foregroundStyle(AppTheme.oliveGreen)
                     .font(.caption)
             }
         }
         .padding()
-        .background(Color(.systemGray6))
+        .background(AppTheme.beigeDark)
         .cornerRadius(12)
+        .shadow(color: Color.black.opacity(0.06), radius: 4, x: 0, y: 2)
         .padding(.horizontal)
     }
 }
@@ -181,19 +246,21 @@ private struct IntensityByTypeChart: View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Intensity by workout type")
                 .font(.headline)
+                .foregroundColor(AppTheme.oliveGreen)
             Chart(typeAverages, id: \.type) { item in
                 BarMark(
                     x: .value("Type", item.type),
                     y: .value("Intensity", item.avg)
                 )
-                .foregroundStyle(.blue)
+                .foregroundStyle(AppTheme.oliveGreen)
             }
             .chartYScale(domain: 0...10)
             .frame(height: 160)
         }
         .padding()
-        .background(Color(.systemGray6))
+        .background(AppTheme.beigeDark)
         .cornerRadius(12)
+        .shadow(color: Color.black.opacity(0.06), radius: 4, x: 0, y: 2)
         .padding(.horizontal)
     }
 }
@@ -218,18 +285,92 @@ private struct DurationChart: View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Duration by day")
                 .font(.headline)
+                .foregroundColor(AppTheme.oliveGreen)
             Chart(durationByDay, id: \.day) { item in
                 BarMark(
                     x: .value("Day", item.label),
                     y: .value("Minutes", item.minutes)
                 )
-                .foregroundStyle(.purple)
+                .foregroundStyle(AppTheme.oliveDark)
             }
             .frame(height: 160)
         }
         .padding()
-        .background(Color(.systemGray6))
+        .background(AppTheme.beigeDark)
         .cornerRadius(12)
+        .shadow(color: Color.black.opacity(0.06), radius: 4, x: 0, y: 2)
+        .padding(.horizontal)
+    }
+}
+
+private struct MoodDeltaByTypeChart: View {
+    let data: [(type: String, avgDelta: Double)]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Avg mood delta by workout type")
+                .font(.headline)
+                .foregroundColor(AppTheme.oliveGreen)
+            if data.isEmpty {
+                Text("No data yet")
+                    .font(.caption)
+                    .foregroundColor(AppTheme.oliveDark.opacity(0.7))
+                    .frame(height: 120)
+                    .frame(maxWidth: .infinity)
+            } else {
+                Chart(data, id: \.type) { item in
+                    BarMark(
+                        x: .value("Type", item.type),
+                        y: .value("Mood Δ", item.avgDelta)
+                    )
+                    .foregroundStyle(item.avgDelta >= 0 ? AppTheme.oliveGreen : AppTheme.oliveDark.opacity(0.8))
+                }
+                .chartYAxis {
+                    AxisMarks(position: .leading)
+                }
+                .frame(height: 160)
+            }
+        }
+        .padding()
+        .background(AppTheme.beigeDark)
+        .cornerRadius(12)
+        .shadow(color: Color.black.opacity(0.06), radius: 4, x: 0, y: 2)
+        .padding(.horizontal)
+    }
+}
+
+private struct MoodDeltaByIntensityBandChart: View {
+    let data: [(band: String, avgDelta: Double)]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Mood delta by intensity band")
+                .font(.headline)
+                .foregroundColor(AppTheme.oliveGreen)
+            if data.isEmpty {
+                Text("No data yet")
+                    .font(.caption)
+                    .foregroundColor(AppTheme.oliveDark.opacity(0.7))
+                    .frame(height: 120)
+                    .frame(maxWidth: .infinity)
+            } else {
+                Chart(data, id: \.band) { item in
+                    BarMark(
+                        x: .value("Band", item.band),
+                        y: .value("Mood Δ", item.avgDelta)
+                    )
+                    .foregroundStyle(item.avgDelta >= 0 ? AppTheme.oliveGreen : AppTheme.oliveDark.opacity(0.8))
+                }
+                .chartYAxis {
+                    AxisMarks(position: .leading)
+                }
+                .frame(height: 160)
+            }
+        }
+        .padding()
+        .background(AppTheme.beigeDark)
+        .cornerRadius(12)
+        .shadow(color: Color.black.opacity(0.06), radius: 4, x: 0, y: 2)
         .padding(.horizontal)
     }
 }

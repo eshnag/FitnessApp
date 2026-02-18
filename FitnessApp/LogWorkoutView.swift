@@ -9,73 +9,93 @@ import SwiftUI
 
 
 struct LogWorkoutView: View {
-    
+
     @State private var workoutType = "Strength"
     @State private var duration = 45
     @State private var intensity = 7
     @State private var moodBefore = 5
     @State private var moodAfter = 7
     @State private var notes = ""
-    
+
     @State private var isSaving = false
     @State private var saveMessage: String?
-    
+
     let workoutTypes = ["Strength", "Cardio", "Legs", "Upper Body", "Full Body", "Other"]
-    
+
     var body: some View {
         NavigationStack {
             Form {
-                
-                Section(header: Text("Workout Type")) {
+                Section(header: sectionHeader("Workout Type")) {
                     Picker("Type", selection: $workoutType) {
                         ForEach(workoutTypes, id: \.self) { type in
                             Text(type)
                         }
                     }
+                    .listRowBackground(AppTheme.beigeLight)
                 }
-                
-                Section(header: Text("Duration (minutes)")) {
+
+                Section(header: sectionHeader("Duration (minutes)")) {
                     Stepper("\(duration) min", value: $duration, in: 5...180, step: 5)
+                    .listRowBackground(AppTheme.beigeLight)
                 }
-                
-                Section(header: Text("Intensity (1–10)")) {
+
+                Section(header: sectionHeader("Intensity (1–10)")) {
                     Stepper("Intensity: \(intensity)", value: $intensity, in: 1...10)
+                    .listRowBackground(AppTheme.beigeLight)
                 }
-                
-                Section(header: Text("Mood")) {
+
+                Section(header: sectionHeader("Mood")) {
                     Stepper("Before: \(moodBefore)", value: $moodBefore, in: 1...10)
+                    .listRowBackground(AppTheme.beigeLight)
                     Stepper("After: \(moodAfter)", value: $moodAfter, in: 1...10)
+                    .listRowBackground(AppTheme.beigeLight)
                 }
-                
-                Section(header: Text("Notes (optional)")) {
+
+                Section(header: sectionHeader("Notes (optional)")) {
                     TextField("How did it feel?", text: $notes)
+                    .listRowBackground(AppTheme.beigeLight)
                 }
-                
+
                 Section {
                     if isSaving {
                         HStack {
                             Spacer()
                             ProgressView()
+                                .tint(AppTheme.oliveGreen)
                             Spacer()
                         }
+                        .listRowBackground(AppTheme.beigeLight)
                     } else {
                         Button("Log Workout") {
                             Task {
                                 await saveWorkout()
                             }
                         }
+                        .tint(AppTheme.oliveGreen)
+                        .listRowBackground(AppTheme.beigeLight)
                     }
                 }
-                
+
                 if let message = saveMessage {
                     Section {
                         Text(message)
-                            .foregroundColor(.green)
+                            .foregroundColor(AppTheme.oliveGreen)
+                            .listRowBackground(AppTheme.beigeLight)
                     }
                 }
             }
+            .scrollContentBackground(.hidden)
+            .background(AppTheme.beige)
             .navigationTitle("Log Session")
+            .toolbarBackground(AppTheme.beige, for: .navigationBar)
+            .toolbarColorScheme(.light, for: .navigationBar)
         }
+    }
+
+    private func sectionHeader(_ text: String) -> some View {
+        Text(text)
+            .foregroundColor(AppTheme.oliveGreen)
+            .fontWeight(.semibold)
     }
     
     // MARK: - Save Logic

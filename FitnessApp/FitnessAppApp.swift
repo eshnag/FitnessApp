@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 @main
 struct FitnessAppApp: App {
     
@@ -18,6 +16,8 @@ struct FitnessAppApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(authVM)
+                .accentColor(AppTheme.oliveGreen)
+                .preferredColorScheme(.light)
         }
     }
 }

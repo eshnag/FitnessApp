@@ -18,6 +18,7 @@ struct ProgressSummaryView: View {
                 if viewModel.isLoading {
                     Spacer()
                     ProgressView()
+                        .tint(AppTheme.oliveGreen)
                     Spacer()
                 } else if let error = viewModel.errorMessage {
                     Text("Error: \(error)")
@@ -29,7 +30,7 @@ struct ProgressSummaryView: View {
                     Spacer()
                     Text("Tap below to get a personal trainer-style summary of your recent workouts and mood.")
                         .font(.subheadline)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(AppTheme.oliveDark.opacity(0.7))
                         .multilineTextAlignment(.center)
                         .padding(.horizontal)
                     Spacer()
@@ -38,7 +39,7 @@ struct ProgressSummaryView: View {
                         LazyVStack(spacing: 24) {
                             Text("Based on your last 7 days")
                                 .font(.subheadline)
-                                .foregroundColor(.secondary)
+                                .foregroundColor(AppTheme.oliveDark.opacity(0.7))
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.horizontal)
 
@@ -64,11 +65,16 @@ struct ProgressSummaryView: View {
                         }
                     }
                     .buttonStyle(.borderedProminent)
+                    .tint(AppTheme.oliveGreen)
                     .padding(.horizontal, 24)
                     .padding(.bottom, 24)
                 }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(AppTheme.beige)
             .navigationTitle("Progress summary")
+            .toolbarBackground(AppTheme.beige, for: .navigationBar)
+            .toolbarColorScheme(.light, for: .navigationBar)
         }
     }
 
@@ -86,10 +92,14 @@ struct ProgressSummaryView: View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Coach's take")
                 .font(.headline)
+                .foregroundColor(AppTheme.oliveGreen)
             Text(summary)
                 .font(.body)
+                .foregroundColor(AppTheme.oliveDark)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
+        .padding()
+        .journalCard()
         .padding(.horizontal)
     }
 }
@@ -103,14 +113,16 @@ private struct StatCard: View {
             Text(value)
                 .font(.title2)
                 .bold()
+                .foregroundColor(AppTheme.oliveGreen)
             Text(title)
                 .font(.caption2)
-                .foregroundColor(.secondary)
+                .foregroundColor(AppTheme.oliveDark.opacity(0.7))
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 12)
-        .background(Color(.systemGray6))
+        .background(AppTheme.beigeDark)
         .cornerRadius(10)
+        .shadow(color: Color.black.opacity(0.06), radius: 4, x: 0, y: 2)
     }
 }
 

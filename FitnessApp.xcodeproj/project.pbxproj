@@ -27,6 +27,7 @@
 		BED493152F4426C0000E29D3 /* ProgressSummaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED493142F4426C0000E29D3 /* ProgressSummaryViewModel.swift */; };
 		BED493172F4426C0000E29D4 /* ProgressSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED493162F4426C0000E29D4 /* ProgressSummaryView.swift */; };
 		BED493192F4426D0000E29D5 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED493182F4426D0000E29D5 /* AppTheme.swift */; };
+		BED4931A2F4426E0000E29D6 /* Experiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED4931B2F4426E0000E29D6 /* Experiment.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		BED493142F4426C0000E29D3 /* ProgressSummaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSummaryViewModel.swift; sourceTree = "<group>"; };
 		BED493162F4426C0000E29D4 /* ProgressSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSummaryView.swift; sourceTree = "<group>"; };
 		BED493182F4426D0000E29D5 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		BED4931B2F4426E0000E29D6 /* Experiment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Experiment.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +139,7 @@
 				BED493122F4426B5000E29D3 /* WorkoutViewModel.swift */,
 				BED493142F4426C0000E29D3 /* ProgressSummaryViewModel.swift */,
 				BED493162F4426C0000E29D4 /* ProgressSummaryView.swift */,
+				BED4931B2F4426E0000E29D6 /* Experiment.swift */,
 			);
 			path = FitnessApp;
 			sourceTree = "<group>";
@@ -323,6 +326,7 @@
 				BED493152F4426C0000E29D3 /* ProgressSummaryViewModel.swift in Sources */,
 				BED493172F4426C0000E29D4 /* ProgressSummaryView.swift in Sources */,
 				BED493192F4426D0000E29D5 /* AppTheme.swift in Sources */,
+				BED4931A2F4426E0000E29D6 /* Experiment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

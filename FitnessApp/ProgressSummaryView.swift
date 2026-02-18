@@ -141,6 +141,7 @@ struct ProgressSummaryView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
             Button {
+                viewModel.clearExperimentResult()
                 showExperimentSheet = true
             } label: {
                 Label("Test a hypothesis (e.g. morning vs evening)", systemImage: "flask")
@@ -372,6 +373,86 @@ private struct MoodDeltaByIntensityBandChart: View {
         .cornerRadius(12)
         .shadow(color: Color.black.opacity(0.06), radius: 4, x: 0, y: 2)
         .padding(.horizontal)
+    }
+}
+
+private struct ExperimentSheet: View {
+    @Binding var definition: ExperimentDefinition
+    let result: ExperimentResult?
+    let error: String?
+    let isRunning: Bool
+    let onRun: () -> Void
+
+    private static let workoutTypes = ["Strength", "Cardio", "Legs", "Upper Body", "Full Body", "Other"]
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section {
+                    Picker("Hypothesis", selection: $definition.hypothesis) {
+                        ForEach(ExperimentHypothesis.allCases, id: \.self) { h in
+                            Text(h.rawValue).tag(h)
+                        }
+                    }
+                    if definition.hypothesis == .workoutType {
+                        Picker("Type A", selection: Binding(
+                            get: { definition.typeA ?? "Strength" },
+                            set: { definition.typeA = $0 }
+                        )) {
+                            ForEach(Self.workoutTypes, id: \.self) { t in
+                                Text(t).tag(t)
+                            }
+                        }
+                        Picker("Type B", selection: Binding(
+                            get: { definition.typeB ?? "Cardio" },
+                            set: { definition.typeB = $0 }
+                        )) {
+                            ForEach(Self.workoutTypes, id: \.self) { t in
+                                Text(t).tag(t)
+                            }
+                        }
+                    }
+                } header: {
+                    Text("Last 14 days")
+                } footer: {
+                    Text("At least 3 workouts in each group required.")
+                }
+
+                Section {
+                    Button {
+                        onRun()
+                    } label: {
+                        HStack {
+                            if isRunning {
+                                ProgressView()
+                                    .scaleEffect(0.9)
+                            }
+                            Text(isRunning ? "Running…" : "Run experiment")
+                        }
+                    }
+                    .disabled(isRunning)
+                }
+
+                if let result = result {
+                    Section(header: Text("Result")) {
+                        Text(result.message)
+                            .font(.body)
+                            .foregroundColor(AppTheme.oliveDark)
+                    }
+                }
+                if let error = error, result == nil {
+                    Section {
+                        Text(error)
+                            .foregroundColor(.red)
+                            .font(.subheadline)
+                    }
+                }
+            }
+            .scrollContentBackground(.hidden)
+            .background(AppTheme.beige)
+            .navigationTitle("Run an experiment")
+            .navigationBarTitleDisplayMode(.inline)
+        }
     }
 }
 

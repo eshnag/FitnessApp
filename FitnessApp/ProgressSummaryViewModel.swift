@@ -131,4 +131,9 @@ class ProgressSummaryViewModel: ObservableObject {
         }
         isRunningExperiment = false
     }
+
+    func clearExperimentResult() {
+        experimentResult = nil
+        experimentError = nil
+    }
 }

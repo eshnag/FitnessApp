@@ -4,7 +4,7 @@ overview: Add a Supabase Edge Function that uses OpenAI to generate a personal-t
 todos:
   - id: todo-1771351257641-fszfwsdpl
     content: Build the ba
-    status: pending
+    status: completed
 isProject: false
 ---
 

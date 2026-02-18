@@ -64,6 +64,9 @@ struct ProgressSummaryView: View {
                         }
                         .padding(.bottom, 24)
                     }
+                    .refreshable {
+                        await viewModel.loadProgressData()
+                    }
                 }
 
                 if !viewModel.isLoading {
@@ -96,9 +99,11 @@ struct ProgressSummaryView: View {
             .navigationTitle("Progress summary")
             .toolbarBackground(AppTheme.beige, for: .navigationBar)
             .toolbarColorScheme(.light, for: .navigationBar)
-            .task {
-                if viewModel.workouts.isEmpty && !viewModel.isLoading {
-                    await viewModel.loadProgressData()
+            .onAppear {
+                Task {
+                    if !viewModel.isLoading {
+                        await viewModel.loadProgressData()
+                    }
                 }
             }
         }
